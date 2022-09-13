@@ -30,6 +30,9 @@
 #include <external/zlib/zlib.h>
 #include "bootctrl.h"
 
+#define __STDC_FORMAT_MACROS
+#include <inttypes.h>
+
 static uint32_t gCurrentSlot;
 static bool gInit;
 static const char *gSlotSuffix[SLOT_NUM] = { "_a", "_b" };
@@ -173,7 +176,7 @@ static int bootctrl_load(nxBootctrl_t *ptBootctrl, bool read_only) {
         return -errno;
     }
 
-    ALOGD("%s %s, BOOTCTRL_OFFSET = 0x%x", NX_DEBUG, __FUNCTION__, BOOTCTRL_OFFSET);
+    ALOGD("%s %s, BOOTCTRL_OFFSET = 0x%" PRIu64, NX_DEBUG, __FUNCTION__, (uint64_t)BOOTCTRL_OFFSET);
 
     lseek(fd, BOOTCTRL_OFFSET, SEEK_SET);
 
@@ -242,7 +245,7 @@ static int bootctrl_store(int fd, nxBootctrl_t *ptBootctrl) {
     }
 
     if (ptBootctrl != NULL) {
-        ALOGI("%s %s ptBootctrl = 0x%x", NX_DEBUG, __FUNCTION__, (uint32_t)ptBootctrl);
+        ALOGI("%s %s ptBootctrl = 0x%" PRIu64, NX_DEBUG, __FUNCTION__, (uint64_t)ptBootctrl);
         ALOGI("%s %s ptBootctrl->slot_suffix = %s", NX_DEBUG, __FUNCTION__, ptBootctrl->slot_suffix);
         ALOGI("%s %s ptBootctrl->magic     = 0x%x", NX_DEBUG, __FUNCTION__, ptBootctrl->magic      );
         ALOGI("%s %s ptBootctrl->version   = 0x%x", NX_DEBUG, __FUNCTION__, ptBootctrl->version    );
